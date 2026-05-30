@@ -1,8 +1,11 @@
 {
   "extends": "tsconfig/vue.json",
-  "include": ["."],
+  "include": ["env.d.ts", "**/*", "**/*.vue"],
   "exclude": ["dist", "build", "node_modules"],
   "compilerOptions": {
     "strictNullChecks": true
+  },
+  "vueCompilerOptions": {
+    "strictTemplates": false
   }
 }

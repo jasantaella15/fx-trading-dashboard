@@ -1,4 +1,15 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
-  "extends": ["./base.json", "@vue/tsconfig/tsconfig.dom.json"]
+  "extends": ["./base.json", "@vue/tsconfig/tsconfig.dom.json"],
+  "compilerOptions": {
+    "baseUrl": "../..",
+    "paths": {
+      "@shadcn/components/*": ["packages/ui/@shadcn/components/*"],
+      "@shadcn/composables/*": ["packages/ui/@shadcn/composables/*"],
+      "@shadcn/lib/*": ["packages/ui/@shadcn/lib/*"],
+      "@shadcn/styles/*": ["packages/ui/@shadcn/styles/*"],
+      "@shadcn/ui/*": ["packages/ui/@shadcn/ui/*"],
+      "@shadcn/utils": ["packages/ui/@shadcn/utils"]
+    }
+  }
 }
