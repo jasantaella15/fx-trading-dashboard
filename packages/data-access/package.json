@@ -1,0 +1,19 @@
+{
+  "name": "data-access",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "scripts": {
+    "lint": "eslint .",
+    "check-types": "vue-tsc --noEmit -p tsconfig.json --composite false"
+  },
+  "dependencies": {
+    "@massive.com/client-js": "^10.7.0",
+    "@tanstack/vue-query": "^5.100.14"
+  },
+  "devDependencies": {
+    "tsconfig": "workspace:*",
+    "vue": "^3.5.0"
+  }
+}
