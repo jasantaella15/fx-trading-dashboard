@@ -3,6 +3,7 @@
   "include": ["env.d.ts", "**/*", "**/*.vue"],
   "exclude": ["dist", "build", "node_modules"],
   "compilerOptions": {
+    "composite": true,
     "strictNullChecks": true
   },
   "vueCompilerOptions": {

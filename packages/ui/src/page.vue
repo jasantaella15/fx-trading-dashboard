@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { Button } from "@shadcn/ui/button";
 import { Alert, AlertDescription } from '@shadcn/ui/alert';
+import ChartExample from "./chart-example.vue";
 
 const props = defineProps<{
   appName: string;
 }>();
+
 </script>
 
 <template>
@@ -22,6 +24,7 @@ const props = defineProps<{
       </Alert>
     </div>
   </main>
+  <ChartExample />
 </template>
 
 <style scoped>

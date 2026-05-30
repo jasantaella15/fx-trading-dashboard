@@ -9,7 +9,9 @@
   },
   "devDependencies": {
     "prettier": "^3.2.5",
-    "turbo": "^2.9.16"
+    "turbo": "^2.9.16",
+    "typescript": "5.5.4",
+    "vue-tsc": "^2.0.4"
   },
   "packageManager": "pnpm@8.15.6"
 }
