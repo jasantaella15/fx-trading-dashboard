@@ -28,8 +28,6 @@ import {
 } from "@shadcn/ui/select"
 import { computed, ref } from "vue"
 
-const description = "An interactive area chart"
-
 const chartData = [
   { date: new Date("2024-04-01"), price: 222},
   { date: new Date("2024-04-02"), price: 97},
