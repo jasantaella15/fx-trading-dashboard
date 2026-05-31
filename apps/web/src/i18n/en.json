@@ -1,5 +1,21 @@
 {
     "dashboard": {
-        "title": "Trading Dashboard"
+        "title": "Trading Dashboard",
+        "filters": {
+            "exchange": {
+                "placeholder": "@:common.select.placeholder @:common.exchange"
+            },
+            "primarySymbol": {
+                "placeholder": "Select a primary symbol",
+                "searchPlaceholder": "Search primary symbols..."
+            }
+        }
+    },
+    "common": {
+        "exchange": "exchange",
+        "primarySymbol": "primary symbol",
+        "select": {
+            "placeholder": "Select a"
+        }
     }
 }

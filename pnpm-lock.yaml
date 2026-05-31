@@ -35,6 +35,9 @@ importers:
       '@tanstack/vue-query-devtools':
         specifier: ^6.1.33
         version: 6.1.33(@tanstack/vue-query@5.100.14)(vue@3.5.35)
+      '@tanstack/vue-virtual':
+        specifier: ^3.13.26
+        version: 3.13.26(vue@3.5.35)
       data-access:
         specifier: workspace:*
         version: link:../../packages/data-access
