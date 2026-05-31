@@ -38,6 +38,10 @@ const svgDefs = `
   </linearGradient>
 `;
 
+const priceFormatter = new Intl.NumberFormat("en-US", {
+  maximumFractionDigits: 6,
+});
+
 </script>
 
 <template>
@@ -91,7 +95,13 @@ const svgDefs = `
                 return new Date(d).toLocaleDateString('en-US', {
                   month: 'short',
                   day: 'numeric',
+                  year: '2-digit'
                 });
+              },
+              valueFormatter: (value) => {
+                return typeof value === 'number'
+                  ? priceFormatter.format(value)
+                  : String(value);
               },
             })
           "
