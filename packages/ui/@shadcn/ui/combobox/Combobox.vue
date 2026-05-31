@@ -114,7 +114,7 @@ function displayValue(value: string) {
           >
             <ComboboxItem
               :value="option.value"
-              class="data-[highlighted]:bg-accent data-[highlighted]:text-accent-foreground relative flex h-9 cursor-default select-none items-center rounded-sm py-1.5 pr-8 pl-2 text-sm outline-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50"
+              class="w-full data-[highlighted]:bg-accent data-[highlighted]:text-accent-foreground relative flex h-9 cursor-default select-none items-center rounded-sm py-1.5 pr-8 pl-2 text-sm outline-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50"
             >
               <span class="truncate">{{ option.label }}</span>
               <ComboboxItemIndicator class="absolute right-2 flex size-3.5 items-center justify-center">

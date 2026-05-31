@@ -2,6 +2,7 @@ import {
   ListExchangesAssetClassEnum,
   ListTickersMarketEnum,
   restClient,
+  type DefaultApiGetForexAggregatesRequest,
   type DefaultApiListExchangesRequest,
   type DefaultApiListTickersRequest,
 } from "@massive.com/client-js";
@@ -24,5 +25,13 @@ export async function getExchanges(
   params: DefaultApiListExchangesRequest = {},
 ) {
   const response = await rest.listExchanges(params, { signal });
+  return response;
+}
+
+export async function getForexAggregate(
+  signal: AbortSignal,
+  params: DefaultApiGetForexAggregatesRequest,
+) {
+  const response = await rest.getForexAggregates(params, { signal });
   return response;
 }

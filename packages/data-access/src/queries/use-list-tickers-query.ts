@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/vue-query";
+import { computed, toValue, type MaybeRefOrGetter } from "vue";
 import { getTickets } from "../services/massive.service";
 import {
   ListTickersMarketEnum,
@@ -11,10 +12,15 @@ const DEFAULT_PARAMS: DefaultApiListTickersRequest = {
 };
 
 export function useListTickersQuery(
-  params: DefaultApiListTickersRequest = DEFAULT_PARAMS,
+  params: MaybeRefOrGetter<DefaultApiListTickersRequest> = DEFAULT_PARAMS,
 ) {
+  const resolvedParams = computed(() => ({
+    ...DEFAULT_PARAMS,
+    ...toValue(params),
+  }));
+
   return useQuery({
-    queryKey: ["tickers", params],
-    queryFn: ({ signal }) => getTickets(signal, params),
+    queryKey: ["tickers", resolvedParams],
+    queryFn: ({ signal }) => getTickets(signal, resolvedParams.value),
   });
 }

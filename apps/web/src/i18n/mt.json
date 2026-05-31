@@ -8,6 +8,15 @@
             "primarySymbol": {
                 "placeholder": "Select a primary symbol",
                 "searchPlaceholder": "Search primary symbols..."
+            },
+            "periods": {
+                "1d": "1D",
+                "1w": "1W",
+                "1m": "1M",
+                "3m": "3M",
+                "6m": "6M",
+                "1y": "1Y",
+                "all": "All"
             }
         }
     },

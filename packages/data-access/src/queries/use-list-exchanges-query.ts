@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/vue-query";
+import { computed, toValue, type MaybeRefOrGetter } from "vue";
 import { getExchanges } from "../services/massive.service";
 import {
   ListExchangesAssetClassEnum,
@@ -10,10 +11,15 @@ const DEFAULT_PARAMS: DefaultApiListExchangesRequest = {
 };
 
 export function useListExchangesQuery(
-  params: DefaultApiListExchangesRequest = DEFAULT_PARAMS,
+  params: MaybeRefOrGetter<DefaultApiListExchangesRequest> = DEFAULT_PARAMS,
 ) {
+  const resolvedParams = computed(() => ({
+    ...DEFAULT_PARAMS,
+    ...toValue(params),
+  }));
+
   return useQuery({
-    queryKey: ["exchanges", params],
-    queryFn: ({ signal }) => getExchanges(signal, params),
+    queryKey: ["exchanges", resolvedParams],
+    queryFn: ({ signal }) => getExchanges(signal, resolvedParams.value),
   });
 }

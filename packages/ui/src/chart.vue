@@ -5,19 +5,10 @@ import { VisArea, VisAxis, VisLine, VisXYContainer } from "@unovis/vue";
 import {
   ChartContainer,
   ChartCrosshair,
-  ChartLegendContent,
   ChartTooltip,
   ChartTooltipContent,
   componentToString,
 } from "@shadcn/ui/chart";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@shadcn/ui/select";
-import { computed, ref } from "vue";
 
 type Data = { date: Date; price: number };
 
