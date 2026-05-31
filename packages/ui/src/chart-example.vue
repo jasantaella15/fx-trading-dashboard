@@ -1,15 +1,7 @@
 <script setup lang="ts">
 import type { ChartConfig } from "@shadcn/ui/chart"
 
-// import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts"
 import { VisArea, VisAxis, VisLine, VisXYContainer } from "@unovis/vue"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@shadcn/ui/card"
 import {
 
   ChartContainer,
@@ -165,14 +157,6 @@ const filterRange = computed(() => {
 </script>
 
 <template>
-  <Card class="pt-0">
-    <CardHeader class="flex items-center gap-2 space-y-0 border-b py-5 sm:flex-row">
-      <div class="grid flex-1 gap-1">
-        <CardTitle>Area Chart - Interactive</CardTitle>
-        <CardDescription>
-          Showing total visitors for the last 3 months
-        </CardDescription>
-      </div>
       <Select v-model="timeRange">
         <SelectTrigger
           class="hidden w-[160px] rounded-lg sm:ml-auto sm:flex"
@@ -192,8 +176,7 @@ const filterRange = computed(() => {
           </SelectItem>
         </SelectContent>
       </Select>
-    </CardHeader>
-    <CardContent class="px-2 pt-4 sm:px-6 sm:pt-6 pb-4">
+      <div class="px-2">
       <ChartContainer :config="chartConfig" class="aspect-auto h-[250px] w-full" :cursor="false">
         <VisXYContainer
           :data="filterRange"
@@ -245,9 +228,7 @@ const filterRange = computed(() => {
             :color="(d: Data, i: number) => chartConfig.price.color"
           />
         </VisXYContainer>
-
         <ChartLegendContent />
       </ChartContainer>
-    </CardContent>
-  </Card>
+      </div>
 </template>

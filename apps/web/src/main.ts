@@ -1,8 +1,15 @@
 import { createApp } from "vue";
 import { QueryClient, VueQueryPlugin } from '@tanstack/vue-query'
 import { experimental_createQueryPersister } from "@tanstack/query-persist-client-core";
+import { createI18n } from "vue-i18n";
+
 import "./styles.css";
 import App from "./app.vue";
+import en from './i18n/en.json'
+import mt from './i18n/mt.json'
+import fr from './i18n/fr.json'
+
+
 
 const app = createApp(App);
 
@@ -23,4 +30,17 @@ const appQueryClient = new QueryClient({
     }
 })
 app.use(VueQueryPlugin, { queryClient: appQueryClient })
+
+
+const i18n = createI18n({
+  locale: 'en',
+  fallbackLocale: 'en',
+  messages: {
+    en,
+    mt,
+    fr
+  }
+})
+
+app.use(i18n)
 app.mount("#app");
