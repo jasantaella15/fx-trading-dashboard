@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { VueQueryDevtools } from '@tanstack/vue-query-devtools'
 import { Button, Page } from "ui";
 import { useListTickersQuery } from "data-access";
 import { name } from "../package.json";
@@ -14,4 +15,5 @@ const { data } = useListTickersQuery();
       <Button>Shared shadcn button</Button>
       {{  data?.results?.toString() }}
   </div>
+  <VueQueryDevtools />
 </template>
