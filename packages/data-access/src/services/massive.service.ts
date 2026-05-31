@@ -1,7 +1,6 @@
 import { ListTickersMarketEnum, restClient, type DefaultApiListTickersRequest } from '@massive.com/client-js';
 
-const apiKey = "rkIgBpWjHzNyPdSyffF3Y5yoip1k6HAz";
-const rest = restClient(apiKey, 'https://api.massive.com');
+const rest = restClient(import.meta.env.VITE_MASSIVE_API_TOKEN, 'https://api.massive.com');
 
 export async function getTickets({market, ...params}: DefaultApiListTickersRequest = {} ){
     const response = await rest.listTickers({market: market ?? ListTickersMarketEnum.Fx ,...params});

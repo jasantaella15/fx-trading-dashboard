@@ -94,9 +94,15 @@ importers:
         specifier: ^5.100.14
         version: 5.100.14(vue@3.5.35)
     devDependencies:
+      '@types/node':
+        specifier: ^20.11.24
+        version: 20.11.24
       tsconfig:
         specifier: workspace:*
         version: link:../tsconfig
+      vite:
+        specifier: ^5.2.0
+        version: 5.4.21(@types/node@20.11.24)
       vue:
         specifier: ^3.5.0
         version: 3.5.35(typescript@5.5.4)
