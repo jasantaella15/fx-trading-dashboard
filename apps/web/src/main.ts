@@ -25,7 +25,8 @@ const appQueryClient = new QueryClient({
             refetchOnWindowFocus: false,
             gcTime: 1000 * 60 * 5,
             staleTime: 1000 * 60 * 5,
-            persister: persister.persisterFn
+            persister: persister.persisterFn,
+            retry: false
         }
     }
 })

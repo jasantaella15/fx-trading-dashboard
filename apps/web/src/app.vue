@@ -10,6 +10,8 @@ import {
   ChartFilters,
   Separator,
   Badge,
+  TrendingUp,
+  TrendingDown,
   type ChartFilterModel,
 } from "ui";
 import {
@@ -65,15 +67,39 @@ const { data: aggregates } = useGetForexAggregatesQuery(
 );
 
 const chartData = computed(() =>
-  (aggregates.value?.results ?? [])
-    .filter(
+  aggregates.value?.results ? 
+    aggregates.value?.results.filter(
       (result) => typeof result.t === "number" && typeof result.c === "number",
     )
     .map((result) => ({
       date: new Date(result.t!),
       price: result.c!,
-    })),
+    })) : undefined,
 );
+
+const details = computed(() => {
+  if (!aggregates.value?.results || !aggregates.value?.results?.length) return {
+    difference: "--",
+    isPositive: true,
+    percentage: "--",
+    currentPrice: "--"
+  }
+  const values = (aggregates.value?.results);
+  const currentPrice = values[values.length - 1].c;
+  const firstPrice = values[0].c;
+
+  const difference = Math.abs(firstPrice - currentPrice);
+  const isPositive = currentPrice >= firstPrice;
+  const percentage = !difference ? 0 : isPositive ? (currentPrice / firstPrice) : (firstPrice / currentPrice);
+
+  return {
+    difference,
+    isPositive,
+    percentage: percentage.toFixed(2),
+    currentPrice: currentPrice.toFixed(2)
+  }
+
+})
 
 // #endregion
 
@@ -116,11 +142,13 @@ const tickerOptions = computed(() =>
           </div>
           <div>
             <p class="text-xs uppercase">{{ $t("dashboard.label.currentPrice") }}</p>
-            <span class="text-xl font-bold uppercase">0.01232</span>
+            <span class="text-xl font-bold uppercase">{{ details.currentPrice }}</span>
           </div>
         </div>
         <div>
-          <Badge class="px-4 py-2 text-md font-bold" variant="success"> 0.23123 (1.41%)</Badge>
+          <Badge class="px-4 py-2 text-md font-bold [&>svg]:size-6" :variant="details.isPositive ? 'success' : 'destructive'">
+            <TrendingUp v-if="details.isPositive" /><TrendingDown v-else />{{ details.currentPrice }}({{ details.percentage }}%)
+          </Badge>
         </div>
       </div>
       <Separator />

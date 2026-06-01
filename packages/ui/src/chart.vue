@@ -10,10 +10,12 @@ import {
   componentToString,
 } from "@shadcn/ui/chart";
 
+import ChartEmpty from "./chart-empty.vue";
+
 type Data = { date: Date; price: number };
 
 const props = defineProps<{
-  data: Array<Data>;
+  data?: Array<Data>;
 }>();
 
 const chartConfig = {
@@ -45,69 +47,42 @@ const priceFormatter = new Intl.NumberFormat("en-US", {
 </script>
 
 <template>
-  <div class="px-2">
-    <ChartContainer
-      :config="chartConfig"
-      class="aspect-auto h-[250px] w-full"
-      :cursor="false"
-    >
+  <div class="relative px-2">
+    <ChartEmpty v-if="data && data.length < 2"  />
+    <ChartContainer v-else :config="chartConfig" class="aspect-auto h-[250px] w-full" :cursor="false">
       <VisXYContainer :data="props.data" :svg-defs="svgDefs">
-        <VisArea
-          :x="(d: Data) => d.date"
-          :y="[(d: Data) => d.price]"
-          :color="(d: Data, i: number) => 'url(#fillPrice)'"
-          :opacity="0.6"
-        />
-        <VisLine
-          :x="(d: Data) => d.date"
-          :y="[(d: Data) => d.price]"
-          :color="(d: Data, i: number) => chartConfig.price.color"
-          :line-width="1"
-        />
-        <VisAxis
-          type="x"
-          :x="(d: Data) => d.date"
-          :tick-line="false"
-          :domain-line="false"
-          :grid-line="false"
-          :num-ticks="6"
-          :tick-format="
-            (d: number, index: number) => {
+        <VisArea :x="(d: Data) => d.date" :y="[(d: Data) => d.price]" :color="(d: Data, i: number) => 'url(#fillPrice)'"
+          :opacity="0.6" />
+        <VisLine :x="(d: Data) => d.date" :y="[(d: Data) => d.price]"
+          :color="(d: Data, i: number) => chartConfig.price.color" :line-width="1" />
+        <VisAxis type="x" :x="(d: Data) => d.date" :tick-line="false" :domain-line="false" :grid-line="false"
+          :num-ticks="6" :tick-format="(d: number, index: number) => {
               const date = new Date(d);
               return date.toLocaleDateString('en-US', {
                 month: 'short',
                 day: 'numeric',
               });
             }
-          "
-        />
-        <VisAxis
-          type="y"
-          :num-ticks="3"
-          :tick-line="false"
-          :domain-line="false"
-        />
+            " />
+        <VisAxis type="y" :num-ticks="3" :tick-line="false" :domain-line="false" />
         <ChartTooltip />
-        <ChartCrosshair
-          :template="
-            componentToString(chartConfig, ChartTooltipContent, {
-              labelFormatter: (d) => {
-                return new Date(d).toLocaleDateString('en-US', {
-                  month: 'short',
-                  day: 'numeric',
-                  year: '2-digit'
-                });
-              },
-              valueFormatter: (value) => {
-                return typeof value === 'number'
-                  ? priceFormatter.format(value)
-                  : String(value);
-              },
-            })
-          "
-          :color="(d: Data, i: number) => chartConfig.price.color"
-        />
+        <ChartCrosshair :template="componentToString(chartConfig, ChartTooltipContent, {
+          labelFormatter: (d) => {
+            return new Date(d).toLocaleDateString('en-US', {
+              month: 'short',
+              day: 'numeric',
+              year: '2-digit'
+            });
+          },
+          valueFormatter: (value) => {
+            return typeof value === 'number'
+              ? priceFormatter.format(value)
+              : String(value);
+          },
+        })
+          " :color="(d: Data, i: number) => chartConfig.price.color" />
       </VisXYContainer>
     </ChartContainer>
+    
   </div>
 </template>

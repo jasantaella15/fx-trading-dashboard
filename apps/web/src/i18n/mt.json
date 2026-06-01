@@ -23,6 +23,12 @@
             "currentPrice": "prezz attwali"
         }
     },
+      "chart": {
+        "empty":{
+            "title": "No Chart Data",
+            "description": "We couldn't fetch enough data to build the chart"
+        }
+    },
     "common": {
         "exchange": "suq",
         "primarySymbol": "simbolu ewlieni",
