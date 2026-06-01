@@ -5,12 +5,15 @@ import {
   CardHeader,
   CardTitle,
 } from '@shadcn/ui/card'
+import { Globe, ChartArea } from '@lucide/vue';
 </script>
 
 <template>
     <Card class="w-full md:max-w-8/12">
-      <CardHeader >
-        <CardTitle class="text-center">{{ $t('dashboard.title') }}</CardTitle>
+      <CardHeader class="flex justify-center items-center">
+        <Globe/>
+        <CardTitle class="text-xl font-bold">{{ $t('dashboard.title') }}</CardTitle>
+        <ChartArea/>
       </CardHeader>
       <CardContent class="flex flex-col gap-4">
       <slot />

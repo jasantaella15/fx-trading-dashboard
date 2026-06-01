@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { HTMLAttributes } from "vue";
 import type { ComboboxOption } from ".";
-import { Check, ChevronsUpDown, Search } from "@lucide/vue";
+import { Check, ChevronsUpDown, Search, X } from "@lucide/vue";
 import { computed, ref } from "vue";
 import {
   ComboboxAnchor,
@@ -25,6 +25,7 @@ const props = withDefaults(
     placeholder?: string;
     searchPlaceholder?: string;
     emptyText?: string;
+    clearLabel?: string;
     disabled?: boolean;
     class?: HTMLAttributes["class"];
   }>(),
@@ -32,6 +33,7 @@ const props = withDefaults(
     placeholder: "Select an option",
     searchPlaceholder: "Search...",
     emptyText: "No results found.",
+    clearLabel: "Clear selection",
   },
 );
 
@@ -60,6 +62,11 @@ const filteredOptions = computed(() => {
 function displayValue(value: string) {
   return props.options.find(option => option.value === value)?.label ?? "";
 }
+
+function clearValue() {
+  model.value = "";
+  searchTerm.value = "";
+}
 </script>
 
 <template>
@@ -68,19 +75,34 @@ function displayValue(value: string) {
     :disabled="disabled"
     :ignore-filter="true"
     :reset-search-term-on-select="true"
+    class="w-full min-w-0"
   >
-    <ComboboxAnchor as-child>
+    <ComboboxAnchor as-child class="w-full min-w-0">
       <ComboboxTrigger as-child>
         <Button
           variant="outline"
           role="combobox"
           :disabled="disabled"
-          :class="cn('w-[220px] justify-between font-normal', !selectedOption && 'text-muted-foreground', props.class)"
+          :class="cn('w-[220px] max-w-full min-w-0 shrink justify-between overflow-hidden font-normal', !selectedOption && 'text-muted-foreground', props.class)"
         >
-          <span class="truncate">
+          <span class="min-w-0 flex-1 truncate text-left">
             {{ selectedOption?.label ?? placeholder }}
           </span>
-          <ChevronsUpDown class="ml-2 size-4 shrink-0 opacity-50" />
+          <span class="ml-2 flex shrink-0 items-center gap-1">
+            <span
+              v-if="model && !disabled"
+              role="button"
+              tabindex="0"
+              class="hover:bg-accent rounded-sm p-0.5 opacity-50 transition-opacity hover:opacity-100"
+              :aria-label="clearLabel"
+              @click.prevent.stop="clearValue"
+              @keydown.enter.prevent.stop="clearValue"
+              @keydown.space.prevent.stop="clearValue"
+            >
+              <X class="size-4" />
+            </span>
+            <ChevronsUpDown class="size-4 shrink-0 opacity-50" />
+          </span>
         </Button>
       </ComboboxTrigger>
     </ComboboxAnchor>
@@ -116,7 +138,7 @@ function displayValue(value: string) {
               :value="option.value"
               class="w-full data-[highlighted]:bg-accent data-[highlighted]:text-accent-foreground relative flex h-9 cursor-default select-none items-center rounded-sm py-1.5 pr-8 pl-2 text-sm outline-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50"
             >
-              <span class="truncate">{{ option.label }}</span>
+              <span class="min-w-0 truncate">{{ option.label }}</span>
               <ComboboxItemIndicator class="absolute right-2 flex size-3.5 items-center justify-center">
                 <Check class="size-4" />
               </ComboboxItemIndicator>
