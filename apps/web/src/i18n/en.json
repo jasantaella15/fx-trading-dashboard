@@ -18,6 +18,9 @@
                 "1y": "1Y",
                 "all": "All"
             }
+        },
+        "label": {
+            "currentPrice": "current price"
         }
     },
     "common": {
