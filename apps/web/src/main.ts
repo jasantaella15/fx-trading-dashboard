@@ -33,6 +33,7 @@ app.use(VueQueryPlugin, { queryClient: appQueryClient })
 
 
 const i18n = createI18n({
+  legacy: false,
   locale: 'en',
   fallbackLocale: 'en',
   messages: {

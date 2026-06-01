@@ -91,7 +91,7 @@ const tickerOptions = computed(() =>
 // #endregion
 </script>
 <template>
-  <main class="h-screen p-2 md:p-8 flex justify-center items-center flex-col">
+  <main class="min-h-screen p-2 md:p-4 flex justify-center items-center flex-col">
     <DashboardCard>
       <ChartFilters :markets="MARKETS_OPTIONS" :tickerOptions="tickerOptions" v-model="filters" />
       <div class="flex gap-4 justify-center md:justify-start" v-if="
@@ -123,7 +123,7 @@ const tickerOptions = computed(() =>
           <Badge class="px-4 py-2 text-md font-bold" variant="success"> 0.23123 (1.41%)</Badge>
         </div>
       </div>
-      <Separator class="my-4" />
+      <Separator />
       <Tabs v-model="timeRange" class="overflow-x-auto">
         <TabsList>
           <TabsTrigger :value="tab" v-for="tab in TABS" class="p-4">

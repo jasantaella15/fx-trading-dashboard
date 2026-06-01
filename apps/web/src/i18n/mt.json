@@ -1,30 +1,33 @@
 {
     "dashboard": {
-        "title": "Trading Dashboard",
+        "title": "Dashboard tat-trading",
         "filters": {
             "exchange": {
                 "placeholder": "@:common.select.placeholder @:common.exchange"
             },
             "primarySymbol": {
-                "placeholder": "Select a primary symbol",
-                "searchPlaceholder": "Search primary symbols..."
+                "placeholder": "Agħżel simbolu ewlieni",
+                "searchPlaceholder": "Fittex simboli ewlenin..."
             },
             "periods": {
-                "1d": "1D",
-                "1w": "1W",
-                "1m": "1M",
-                "3m": "3M",
-                "6m": "6M",
-                "1y": "1Y",
-                "all": "All"
+                "1d": "1J",
+                "1w": "1Ġ",
+                "1m": "1X",
+                "3m": "3X",
+                "6m": "6X",
+                "1y": "1S",
+                "all": "Kollox"
             }
+        },
+        "label": {
+            "currentPrice": "prezz attwali"
         }
     },
     "common": {
-        "exchange": "exchange",
-        "primarySymbol": "primary symbol",
+        "exchange": "suq",
+        "primarySymbol": "simbolu ewlieni",
         "select": {
-            "placeholder": "Select a"
+            "placeholder": "Agħżel"
         }
     }
 }
