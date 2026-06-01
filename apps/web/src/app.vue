@@ -13,22 +13,20 @@ import {
 import {
   useListTickersQuery,
   useGetForexAggregatesQuery,
-  GetForexAggregatesTimespanEnum,
   ListTickersMarketEnum,
+  ForexAggregatesTimeRangeEnum,
 } from "data-access";
 
-
 // #region Constants
-enum Timespan {
-  Day = "1d",
-  Week = "1w",
-  Month = "1m",
-  ThreeMonths = "3m",
-  SixMonths = "6m",
-  Year = "1y",
-  All = "all"
-}
-const TABS = [Timespan.Day, Timespan.Week, Timespan.Month, Timespan.ThreeMonths, Timespan.SixMonths, Timespan.Year, Timespan.All];
+const TABS = [
+  ForexAggregatesTimeRangeEnum.Day,
+  ForexAggregatesTimeRangeEnum.Week,
+  ForexAggregatesTimeRangeEnum.Month,
+  ForexAggregatesTimeRangeEnum.ThreeMonths,
+  ForexAggregatesTimeRangeEnum.SixMonths,
+  ForexAggregatesTimeRangeEnum.Year,
+  ForexAggregatesTimeRangeEnum.All,
+];
 const MARKETS_OPTIONS = [
   ListTickersMarketEnum.Fx,
   ListTickersMarketEnum.Crypto,
@@ -39,13 +37,12 @@ const MARKETS_OPTIONS = [
 // #endregion
 
 // #region State
-const timeRange = ref("1d");
+const timeRange = ref<ForexAggregatesTimeRangeEnum>(ForexAggregatesTimeRangeEnum.Day);
 const filters = ref<ChartFilterModel>({
   market: ListTickersMarketEnum.Fx,
   selectedTicker: "",
 });
 // #endregion
-
 
 // #region Ticker
 const listTickerQueryOptions = computed(() => ({
@@ -56,19 +53,14 @@ const { data: tickersData } = useListTickersQuery(listTickerQueryOptions);
 
 // #region Chart
 const forexAggregatesQueryOptions = computed(() => {
-  const today = new Date();
-  const twoYearsAgo = new Date();
-  twoYearsAgo.setFullYear(today.getFullYear() - 2);
-
   return {
     forexTicker: filters.value.selectedTicker,
-    multiplier: 1,
-    timespan: GetForexAggregatesTimespanEnum.Day,
-    to: today.toISOString().split("T")[0],
-    from: twoYearsAgo.toISOString().split("T")[0],
-  };
+    timeRange: timeRange.value
+  }
 });
-const { data: aggregates } = useGetForexAggregatesQuery(forexAggregatesQueryOptions);
+const { data: aggregates } = useGetForexAggregatesQuery(
+  forexAggregatesQueryOptions,
+);
 
 const chartData = computed(() =>
   (aggregates.value?.results ?? [])
@@ -81,34 +73,13 @@ const chartData = computed(() =>
     })),
 );
 
-const filteredChartData = computed(() => {
-  const data = chartData.value;
-  const latestPoint = data[data.length - 1];
-
-  if (!latestPoint || timeRange.value === "all") {
-    return data;
-  }
-
-  const daysByRange: Record<string, number> = {
-    "1d": 1,
-    "1w": 7,
-    "1m": 30,
-    "3m": 90,
-    "6m": 180,
-    "1y": 365,
-  };
-  const startDate = new Date(latestPoint.date);
-  startDate.setDate(
-    startDate.getDate() - (daysByRange[timeRange.value] ?? 365 * 10),
-  );
-
-  return data.filter((item) => item.date >= startDate);
-});
 // #endregion
 
 // #region Computed
 const tickers = computed(() => tickersData.value?.results ?? []);
-const selectedTickerData = computed(() => tickers.value.find((t) => t.ticker === filters.value.selectedTicker));
+const selectedTickerData = computed(() =>
+  tickers.value.find((t) => t.ticker === filters.value.selectedTicker),
+);
 const tickerOptions = computed(() =>
   tickers.value.map((ticker) => ({
     value: ticker.ticker,
@@ -116,25 +87,26 @@ const tickerOptions = computed(() =>
   })),
 );
 // #endregion
-
 </script>
 <template>
   <main class="h-screen p-2 md:p-8 flex justify-center items-center flex-col">
     <DashboardCard>
       <ChartFilters :markets="MARKETS_OPTIONS" :tickerOptions="tickerOptions" v-model="filters" />
-      <div class="flex gap-4" v-if="
+      <div class="flex gap-4 justify-center md:justify-between" v-if="
         filters.selectedTicker && filters.market == ListTickersMarketEnum.Fx
       ">
-        <img
-          :src="`https://wise.com/public-resources/assets/flags/rectangle/${selectedTickerData?.base_currency_symbol?.toLowerCase()}.png`"
-          :alt="selectedTickerData?.base_currency_name" />
-        <img
-          :src="`https://wise.com/public-resources/assets/flags/rectangle/${selectedTickerData?.currency_symbol?.toLowerCase()}.png`"
-          :alt="selectedTickerData?.currency_name" />
-        <h2 class="text-xl font-bold">
-          {{ selectedTickerData?.base_currency_symbol }} -
-          {{ selectedTickerData?.currency_symbol }}
-        </h2>
+        <div class="flex gap-4">
+          <img
+            :src="`https://wise.com/public-resources/assets/flags/rectangle/${selectedTickerData?.base_currency_symbol?.toLowerCase()}.png`"
+            :alt="selectedTickerData?.base_currency_name" />
+          <img
+            :src="`https://wise.com/public-resources/assets/flags/rectangle/${selectedTickerData?.currency_symbol?.toLowerCase()}.png`"
+            :alt="selectedTickerData?.currency_name" />
+          <h2 class="text-xl font-bold">
+            {{ selectedTickerData?.base_currency_symbol }} -
+            {{ selectedTickerData?.currency_symbol }}
+          </h2>
+        </div>
       </div>
       <Tabs v-model="timeRange" class="overflow-x-auto">
         <TabsList>
@@ -143,7 +115,7 @@ const tickerOptions = computed(() =>
           </TabsTrigger>
         </TabsList>
       </Tabs>
-      <Chart :data="filteredChartData" />
+      <Chart :data="chartData" />
     </DashboardCard>
     <VueQueryDevtools />
   </main>
