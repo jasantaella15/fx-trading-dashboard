@@ -7,6 +7,10 @@ import {
     EmptyMedia,
     EmptyTitle,
 } from "@shadcn/ui/empty";
+
+const props = defineProps<{
+  isEnough?: boolean
+}>();
 </script>
 
 <template>
@@ -16,7 +20,7 @@ import {
                 <ChartNetwork />
             </EmptyMedia>
             <EmptyTitle>{{ $t("chart.empty.title") }}</EmptyTitle>
-            <EmptyDescription>
+            <EmptyDescription v-if="isEnough">
                 {{ $t("chart.empty.description") }}
             </EmptyDescription>
         </EmptyHeader>

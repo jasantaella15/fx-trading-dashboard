@@ -66,19 +66,22 @@ const { data: aggregates } = useGetForexAggregatesQuery(
   forexAggregatesQueryOptions,
 );
 
-const chartData = computed(() =>
-  aggregates.value?.results ? 
-    aggregates.value?.results.filter(
+const chartData = computed(() => {
+  if (!filters.value.selectedTicker || !aggregates.value?.results) {
+    return [];
+  }
+
+  return aggregates.value.results.filter(
       (result) => typeof result.t === "number" && typeof result.c === "number",
     )
     .map((result) => ({
       date: new Date(result.t!),
       price: result.c!,
-    })) : undefined,
-);
+    }));
+});
 
 const details = computed(() => {
-  if (!aggregates.value?.results || !aggregates.value?.results?.length) return {
+  if (!filters.value.selectedTicker || !aggregates.value?.results?.length) return {
     difference: "--",
     isPositive: true,
     percentage: "--",

@@ -48,7 +48,7 @@ const priceFormatter = new Intl.NumberFormat("en-US", {
 
 <template>
   <div class="relative px-2">
-    <ChartEmpty v-if="data && data.length < 2"  />
+    <ChartEmpty v-if="data && data.length < 2" :is-enough="data.length > 1" />
     <ChartContainer v-else :config="chartConfig" class="aspect-auto h-[250px] w-full" :cursor="false">
       <VisXYContainer :data="props.data" :svg-defs="svgDefs">
         <VisArea :x="(d: Data) => d.date" :y="[(d: Data) => d.price]" :color="(d: Data, i: number) => 'url(#fillPrice)'"
