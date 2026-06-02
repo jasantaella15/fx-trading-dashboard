@@ -3,6 +3,7 @@ import { VueQueryDevtools } from "@tanstack/vue-query-devtools";
 import { computed, ref } from "vue";
 import {
   Chart,
+  ChartDetails,
   DashboardCard,
   Tabs,
   TabsList,
@@ -123,37 +124,13 @@ const tickerOptions = computed(() =>
   <main class="min-h-screen p-2 md:p-4 flex justify-center items-center flex-col">
     <DashboardCard>
       <ChartFilters :markets="MARKETS_OPTIONS" :tickerOptions="tickerOptions" v-model="filters" />
-      <div class="flex gap-4 justify-center md:justify-start" v-if="
-        filters.selectedTicker && filters.market == ListTickersMarketEnum.Fx
-      ">
-        <img
-          :src="`https://wise.com/public-resources/assets/flags/rectangle/${selectedTickerData?.base_currency_symbol?.toLowerCase()}.png`"
-          :alt="selectedTickerData?.base_currency_name" />
-        <img
-          :src="`https://wise.com/public-resources/assets/flags/rectangle/${selectedTickerData?.currency_symbol?.toLowerCase()}.png`"
-          :alt="selectedTickerData?.currency_name" />
-        <h2 class="text-xl font-bold">
-          {{ selectedTickerData?.base_currency_symbol }} -
-          {{ selectedTickerData?.currency_symbol }}
-        </h2>
-      </div>
-      <div class="flex flex-col justify-center items-center gap-4 md:justify-between md:items-start md:flex-row">
-        <div class="flex gap-4">
-          <div>
-            <p class="text-xs uppercase">{{ $t("common.exchange") }}</p>
-            <span class="text-xl font-bold uppercase">{{ filters.market }}</span>
-          </div>
-          <div>
-            <p class="text-xs uppercase">{{ $t("dashboard.label.currentPrice") }}</p>
-            <span class="text-xl font-bold uppercase">{{ details.currentPrice }}</span>
-          </div>
-        </div>
-        <div>
-          <Badge class="px-4 py-2 text-md font-bold [&>svg]:size-6" :variant="details.isPositive ? 'success' : 'destructive'">
-            <TrendingUp v-if="details.isPositive" /><TrendingDown v-else />{{ details.currentPrice }}({{ details.percentage }}%)
-          </Badge>
-        </div>
-      </div>
+      <ChartDetails
+        :filters="filters"
+        :currentPrice="details.currentPrice"
+        :isPositive="details.isPositive"
+        :percentage="details.percentage"
+        :currencySymbol="selectedTickerData?.currency_symbol"
+        :baseCurrencySymbol="selectedTickerData?.base_currency_symbol"  />
       <Separator />
       <Tabs v-model="timeRange" class="overflow-x-auto">
         <TabsList>

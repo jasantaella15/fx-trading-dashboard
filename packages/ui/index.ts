@@ -12,3 +12,4 @@ export { default as Chart } from './src/chart.vue'
 export { default as ChartFilters, type ChartFilterModel } from './src/chart-filters.vue'
 export {default as DashboardCard } from "./src/dashboard-card.vue";
 export { TrendingUp, TrendingDown } from '@lucide/vue'
+export { default as ChartDetails } from './src/chart-details.vue'
