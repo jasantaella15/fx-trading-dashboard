@@ -29,6 +29,12 @@
             "description": "We couldn't fetch enough data to build the chart"
         }
     },
+    "dialog": {
+        "limit": {
+            "title": "Let's take a short break",
+            "description": "You have made quite a few requests recently"
+        }
+    },
     "common": {
         "exchange": "exchange",
         "primarySymbol": "primary symbol",

@@ -36,7 +36,7 @@ export function useGetForexAggregatesQuery(
   return useQuery({
     queryKey: ["aggregates", "forex", resolvedParams],
     queryFn: ({ signal }) => getForexAggregate(signal, resolvedParams.value),
-    enabled: computed(() => !!resolvedParams.value.forexTicker),
+    enabled: computed(() => !!resolvedParams.value.forexTicker)
   });
 }
 

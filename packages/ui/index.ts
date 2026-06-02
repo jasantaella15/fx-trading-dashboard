@@ -13,3 +13,4 @@ export { default as ChartFilters, type ChartFilterModel } from './src/chart-filt
 export {default as DashboardCard } from "./src/dashboard-card.vue";
 export { TrendingUp, TrendingDown } from '@lucide/vue'
 export { default as ChartDetails } from './src/chart-details.vue'
+export { default as LimitReachedDialog } from './src/limit-reached-dialog.vue'

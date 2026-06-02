@@ -10,9 +10,7 @@ import {
   TabsTrigger,
   ChartFilters,
   Separator,
-  Badge,
-  TrendingUp,
-  TrendingDown,
+  LimitReachedDialog,
   type ChartFilterModel,
 } from "ui";
 import {
@@ -20,6 +18,7 @@ import {
   useGetForexAggregatesQuery,
   ListTickersMarketEnum,
   ForexAggregatesTimeRangeEnum,
+  store
 } from "data-access";
 
 // #region Constants
@@ -63,16 +62,16 @@ const forexAggregatesQueryOptions = computed(() => {
     timeRange: timeRange.value
   }
 });
-const { data: aggregates } = useGetForexAggregatesQuery(
+const { data: aggregates, isFetching: isAggregatesFetching } = useGetForexAggregatesQuery(
   forexAggregatesQueryOptions,
 );
 
 const chartData = computed(() => {
-  if (!filters.value.selectedTicker || !aggregates.value?.results) {
+  if (!isAggregatesFetching && (!filters.value.selectedTicker || !aggregates.value?.results)) {
     return [];
   }
 
-  return aggregates.value.results.filter(
+  return aggregates.value?.results?.filter(
       (result) => typeof result.t === "number" && typeof result.c === "number",
     )
     .map((result) => ({
@@ -82,7 +81,7 @@ const chartData = computed(() => {
 });
 
 const details = computed(() => {
-  if (!filters.value.selectedTicker || !aggregates.value?.results?.length) return {
+  if ((!isAggregatesFetching && !filters.value.selectedTicker) || !aggregates.value?.results?.length) return {
     difference: "--",
     isPositive: true,
     percentage: "--",
@@ -121,6 +120,7 @@ const tickerOptions = computed(() =>
 // #endregion
 </script>
 <template>
+  <LimitReachedDialog :open="store.rateLimitReached" />
   <main class="min-h-screen p-2 md:p-4 flex justify-center items-center flex-col">
     <DashboardCard>
       <ChartFilters :markets="MARKETS_OPTIONS" :tickerOptions="tickerOptions" v-model="filters" />

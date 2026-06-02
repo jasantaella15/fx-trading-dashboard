@@ -23,10 +23,16 @@
             "currentPrice": "prix actuel"
         }
     },
-      "chart": {
-        "empty":{
-            "title": "No Chart Data",
-            "description": "We couldn't fetch enough data to build the chart"
+    "chart": {
+        "empty": {
+            "title": "Aucune donnée de graphique",
+            "description": "Nous n'avons pas pu récupérer suffisamment de données pour créer le graphique"
+        }
+    },
+    "dialog": {
+        "limit": {
+            "title": "Faisons une courte pause",
+            "description": "Vous avez effectué beaucoup de requêtes récemment"
         }
     },
     "common": {

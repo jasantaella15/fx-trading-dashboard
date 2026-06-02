@@ -23,10 +23,16 @@
             "currentPrice": "prezz attwali"
         }
     },
-      "chart": {
-        "empty":{
-            "title": "No Chart Data",
-            "description": "We couldn't fetch enough data to build the chart"
+    "chart": {
+        "empty": {
+            "title": "L-ebda data għall-grafika",
+            "description": "Ma stajniex niksbu biżżejjed data biex nibnu l-grafika"
+        }
+    },
+    "dialog": {
+        "limit": {
+            "title": "Ejja nieħdu pawża qasira",
+            "description": "Għamilt ħafna talbiet dan l-aħħar"
         }
     },
     "common": {

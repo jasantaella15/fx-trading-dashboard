@@ -1,6 +1,6 @@
 import { createApp } from "vue";
-import { QueryClient, VueQueryPlugin } from '@tanstack/vue-query'
-import { experimental_createQueryPersister } from "@tanstack/query-persist-client-core";
+import { queryClient } from "data-access"
+import { VueQueryPlugin } from '@tanstack/vue-query'
 import { createI18n } from "vue-i18n";
 
 import "./styles.css";
@@ -13,24 +13,7 @@ import fr from './i18n/fr.json'
 
 const app = createApp(App);
 
-const persister = experimental_createQueryPersister({
-  storage: window.localStorage,
-  maxAge: 1000 * 60 * 60 * 24,
-  prefix: 'FX-TRADING'
-})
-
-const appQueryClient = new QueryClient({
-    defaultOptions: {
-        queries: {
-            refetchOnWindowFocus: false,
-            gcTime: 1000 * 60 * 5,
-            staleTime: 1000 * 60 * 5,
-            persister: persister.persisterFn,
-            retry: false
-        }
-    }
-})
-app.use(VueQueryPlugin, { queryClient: appQueryClient })
+app.use(VueQueryPlugin, { queryClient })
 
 
 const i18n = createI18n({

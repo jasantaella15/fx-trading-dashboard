@@ -1,11 +1,11 @@
 import {
-  ListExchangesAssetClassEnum,
-  ListTickersMarketEnum,
   restClient,
   type DefaultApiGetForexAggregatesRequest,
   type DefaultApiListExchangesRequest,
   type DefaultApiListTickersRequest,
 } from "@massive.com/client-js";
+import { AxiosError } from "axios";
+import { store } from '../state/store'
 
 const rest = restClient(
   import.meta.env.VITE_MASSIVE_API_TOKEN,
@@ -16,7 +16,7 @@ export async function getTickets(
   signal: AbortSignal,
   params: DefaultApiListTickersRequest = {},
 ) {
-  const response = await rest.listTickers(params, { signal });
+  const response = await rest.listTickers(params, { signal }).catch(catchApiLimitReachedError);
   return response;
 }
 
@@ -24,7 +24,7 @@ export async function getExchanges(
   signal: AbortSignal,
   params: DefaultApiListExchangesRequest = {},
 ) {
-  const response = await rest.listExchanges(params, { signal });
+  const response = await rest.listExchanges(params, { signal }).catch(catchApiLimitReachedError);
   return response;
 }
 
@@ -32,6 +32,14 @@ export async function getForexAggregate(
   signal: AbortSignal,
   params: DefaultApiGetForexAggregatesRequest,
 ) {
-  const response = await rest.getForexAggregates(params, { signal });
+  const response = await rest.getForexAggregates(params, { signal }).catch(catchApiLimitReachedError);
   return response;
+}
+
+function catchApiLimitReachedError(error: unknown) {
+  if( error instanceof AxiosError){
+    const statusCode = error.response?.status;
+    if (statusCode === 429) store.onRateLimitReached();
+  }
+  throw error;
 }

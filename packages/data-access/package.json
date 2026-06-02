@@ -10,7 +10,9 @@
   },
   "dependencies": {
     "@massive.com/client-js": "^10.7.0",
+    "@tanstack/query-persist-client-core": "^5.100.14",
     "@tanstack/vue-query": "^5.100.14",
+    "axios": "^1.16.1",
     "vue-i18n": "^11.4.4"
   },
   "devDependencies": {
