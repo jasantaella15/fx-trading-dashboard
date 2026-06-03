@@ -9,8 +9,9 @@ export { FieldSet, FieldLegend , FieldDescription, FieldLabel, FieldContent, Fie
 export { Badge } from "./@shadcn/ui/badge"
 export { Separator } from "./@shadcn/ui/separator"
 export { default as Chart } from './src/molecules/chart.vue'
-export { default as ChartFilters, type ChartFilterModel } from './src/molecules/chart-filters.vue'
+export { default as ChartFilters } from './src/molecules/chart-filters.vue'
 export {default as DashboardCard } from "./src/dashboard-card.vue";
 export { TrendingUp, TrendingDown } from '@lucide/vue'
 export { default as ChartDetails } from './src/molecules/chart-details.vue'
 export { default as LimitReachedDialog } from './src/molecules/limit-reached-dialog.vue'
+export type { ChartFilterModel } from './src/molecules/chart-filters.types'

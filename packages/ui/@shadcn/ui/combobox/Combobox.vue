@@ -26,6 +26,7 @@ const props = withDefaults(
     searchPlaceholder?: string;
     emptyText?: string;
     clearLabel?: string;
+    testId?: string;
     disabled?: boolean;
     class?: HTMLAttributes["class"];
   }>(),
@@ -82,6 +83,7 @@ function clearValue() {
         <Button
           variant="outline"
           role="combobox"
+          :data-testid="testId"
           :disabled="disabled"
           :class="cn('w-[220px] max-w-full min-w-0 shrink justify-between overflow-hidden font-normal', !selectedOption && 'text-muted-foreground', props.class)"
         >
@@ -117,6 +119,7 @@ function clearValue() {
           <Search class="mr-2 size-4 shrink-0 opacity-50" />
           <ComboboxInput
             v-model="searchTerm"
+            :data-testid="testId ? `${testId}-input` : undefined"
             :display-value="displayValue"
             :placeholder="searchPlaceholder"
             class="placeholder:text-muted-foreground h-10 w-full bg-transparent py-3 text-sm outline-none disabled:cursor-not-allowed disabled:opacity-50"

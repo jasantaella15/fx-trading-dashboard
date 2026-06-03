@@ -9,6 +9,10 @@
     "test": {
       "dependsOn": ["^test"]
     },
+    "e2e": {
+      "cache": false,
+      "passThroughEnv": ["APP_URL", "PLAYWRIGHT_*"]
+    },
     "check-types":{
       "cache": false
     },

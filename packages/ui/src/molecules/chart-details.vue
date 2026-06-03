@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Badge } from "@shadcn/ui/badge";
 import { TrendingUp, TrendingDown } from "@lucide/vue";
-import type { ChartFilterModel } from "./chart-filters.vue";
+import type { ChartFilterModel } from "./chart-filters.types";
 
 const props = defineProps<{
     filters: ChartFilterModel
@@ -28,17 +28,22 @@ const props = defineProps<{
         <div class="flex gap-4">
             <div>
                 <p class="text-xs uppercase">{{ $t("common.exchange") }}</p>
-                <span class="text-xl font-bold uppercase">{{ filters.market }}</span>
+                <span class="text-xl font-bold uppercase" data-testid="selected-exchange">{{ filters.market }}</span>
             </div>
             <div>
                 <p class="text-xs uppercase">
                     {{ $t("dashboard.label.currentPrice") }}
                 </p>
-                <span class="text-xl font-bold uppercase">{{ currentPrice }}</span>
+                <span class="text-xl font-bold uppercase" data-testid="current-price">{{ currentPrice }}</span>
             </div>
         </div>
         <div>
-            <Badge class="px-4 py-2 text-md font-bold [&>svg]:size-6" :variant="isPositive ? 'success' : 'destructive'">
+            <Badge
+                class="px-4 py-2 text-md font-bold [&>svg]:size-6"
+                role="status"
+                data-testid="price-change"
+                :variant="isPositive ? 'success' : 'destructive'"
+            >
                 <TrendingUp v-if="isPositive" />
                 <TrendingDown v-else />{{ currentPrice}}({{ percentage }}%)
             </Badge>

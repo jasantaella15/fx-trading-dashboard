@@ -3,11 +3,7 @@ import { computed } from "vue";
 import { Select, SelectTrigger, SelectContent, SelectGroup, SelectLabel, SelectItem, SelectValue } from '@shadcn/ui/select'
 import { Combobox, type ComboboxOption } from '@shadcn/ui/combobox'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@shadcn/ui/form'
-
-export type ChartFilterModel = {
-    market: string;
-    selectedTicker: string;
-}
+import type { ChartFilterModel } from './chart-filters.types'
 
 defineProps<{
     markets: Array<string>;
@@ -47,13 +43,13 @@ const selectedTicker = computed({
             <FormItem class="w-full">
                 <FormLabel class="capitalize">{{ $t("common.exchange") }} </FormLabel>
                 <FormControl>
-                    <Select v-model="market">
-                        <SelectTrigger class="w-full">
+                    <Select v-model="market" name="exchange">
+                        <SelectTrigger class="w-full" data-testid="exchange-select">
                             <SelectValue :placeholder="$t('dashboard.filters.exchange.placeholder')" />
                         </SelectTrigger>
                         <SelectContent>
                             <SelectGroup>
-                                <SelectItem :value="option" v-for="option in markets">
+                                <SelectItem :value="option" :data-testid="`exchange-option-${option}`" v-for="option in markets">
                                     {{ option.toLocaleUpperCase() }}
                                 </SelectItem>
                             </SelectGroup>
@@ -67,6 +63,7 @@ const selectedTicker = computed({
                 <FormLabel class="capitalize">{{ $t("common.primarySymbol") }} </FormLabel>
                 <FormControl>
                     <Combobox v-model="selectedTicker" :options="tickerOptions"
+                        test-id="primary-symbol-combobox"
                         :placeholder="$t('dashboard.filters.primarySymbol.placeholder')"
                         :search-placeholder="$t('dashboard.filters.primarySymbol.searchPlaceholder')"
                         class="w-full" />

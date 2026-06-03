@@ -47,7 +47,12 @@ const priceFormatter = new Intl.NumberFormat("en-US", {
 </script>
 
 <template>
-  <div class="relative px-2">
+  <div
+    class="relative px-2"
+    role="img"
+    data-testid="price-chart"
+    :data-state="data && data.length >= 2 ? 'ready' : 'empty'"
+  >
     <ChartEmpty v-if="data && data.length < 2" :is-enough="data.length > 1" />
     <ChartContainer v-else :config="chartConfig" class="aspect-auto h-[250px] w-full" :cursor="false">
       <VisXYContainer :data="props.data" :svg-defs="svgDefs">

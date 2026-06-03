@@ -134,7 +134,7 @@ const tickerOptions = computed(() =>
       <Separator />
       <Tabs v-model="timeRange" class="overflow-x-auto">
         <TabsList>
-          <TabsTrigger :value="tab" v-for="tab in TABS" class="p-4">
+          <TabsTrigger :value="tab" :data-testid="`time-range-tab-${tab}`" v-for="tab in TABS" class="p-4">
             {{ $t("dashboard.filters.periods." + tab) }}
           </TabsTrigger>
         </TabsList>
