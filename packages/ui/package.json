@@ -1,15 +1,22 @@
 {
   "name": "ui",
   "version": "0.0.0",
+  "type": "module",
   "private": true,
   "main": "./index.ts",
   "types": "./index.ts",
   "scripts": {
     "lint": "eslint .",
-    "check-types": "vue-tsc --noEmit -p tsconfig.json --composite false"
+    "check-types": "vue-tsc --noEmit -p tsconfig.json --composite false",
+    "test": "vitest run"
   },
   "devDependencies": {
+    "@testing-library/vue": "^8.1.0",
+    "@vitejs/plugin-vue": "^5.0.4",
+    "jsdom": "^29.1.1",
     "tsconfig": "workspace:*",
+    "vite": "^5.2.0",
+    "vitest": "^3.2.6",
     "vue": "^3.5.0"
   },
   "dependencies": {
